@@ -63,7 +63,11 @@ struct Parser<R, W, std::wstring, ProcessorsType> {
     outStr.resize(_str.size());
 
     auto* ptr = _str.c_str();
+    #ifndef WIN32
     auto len = std::wcsrtombs(outStr.data(), &ptr, _str.size(), &state);
+    #else
+    // TODO
+    #endif
     outStr.resize(len);
 
     ParentType::add_value(_w, outStr, _parent);
