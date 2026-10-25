@@ -3,24 +3,15 @@
 
 #include <map>
 #include <string>
-#include <type_traits>
 #include <variant>
 
 #include "../Result.hpp"
 #include "Parent.hpp"
 #include "Parser_base.hpp"
+#include "is_monostate.hpp"
 #include "schema/Type.hpp"
 
 namespace rfl::parsing {
-
-template <class T>
-struct is_monostate : std::false_type {};
-
-template <>
-struct is_monostate<std::monostate> : std::true_type {};
-
-template <class T>
-constexpr bool is_monostate_v = is_monostate<std::remove_cvref_t<T>>::value;
 
 template <class R, class W, class ProcessorsType>
 struct ParserMonostate {
