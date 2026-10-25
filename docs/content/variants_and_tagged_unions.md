@@ -269,6 +269,9 @@ rfl::json::write(Order{.price = 2});                 // {"price":2}
 
 Both `{}` and `{"price":null}` are read as `std::monostate`.
 
+As with `std::optional`, passing `rfl::NoOptionals` writes the field as `null`
+(`{"price":null}`) and makes it required on read.
+
 
 ## The visitor pattern
 

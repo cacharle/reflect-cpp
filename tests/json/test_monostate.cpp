@@ -39,6 +39,22 @@ TEST(json, test_monostate_rfl_variant) {
   }
 }
 
+TEST(json, test_monostate_no_optionals) {
+  write_and_read<rfl::NoOptionals>(Order{.price = std::monostate{}},
+                                   R"({"price":null})");
+  write_and_read<rfl::NoOptionals>(Order{.price = 2}, R"({"price":2})");
+
+  EXPECT_FALSE((rfl::json::read<Order, rfl::NoOptionals>(R"({})")));
+}
+
+TEST(json, test_monostate_no_optionals_rfl_variant) {
+  write_and_read<rfl::NoOptionals>(RflOrder{.price = std::monostate{}},
+                                   R"({"price":null})");
+  write_and_read<rfl::NoOptionals>(RflOrder{.price = 2}, R"({"price":2})");
+
+  EXPECT_FALSE((rfl::json::read<RflOrder, rfl::NoOptionals>(R"({})")));
+}
+
 TEST(json, test_monostate_top_level) {
   write_and_read(std::variant<std::monostate, int>{}, "null");
   write_and_read(rfl::Variant<std::monostate, int>{}, "null");
